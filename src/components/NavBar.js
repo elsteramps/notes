@@ -9,7 +9,7 @@ function NavBar() {
             </div>
                 <ul className="navbar-nav">
                 <li className="nav-item">
-                    <NavLink className="nav-link" to={'/'} exact>Main</NavLink>
+                    <NavLink className="nav-link" to={'/'} exact='true'>Main</NavLink>
                 </li>
                 <li className="nav-item">
                     <NavLink className="nav-link" to={'/about'}>Info</NavLink>

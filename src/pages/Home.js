@@ -1,12 +1,16 @@
-import React from 'react';
+import React, {useContext, useEffect} from 'react';
 import Form from '../components/Form';
+import Loader from '../components/loader';
 import Notes from '../components/Notes';
+import { FireBaseContext } from '../context/firebase/fireBaseContext';
 
 function Home() {
 
-    const notes = new Array(3)
-    .fill('')
-    .map((_, i) => ({id: i, title: `Note ${i + 1}`}))
+    const {loading, notes, fetchNotes, removeNote} = useContext(FireBaseContext)
+
+    useEffect(() => {
+        fetchNotes()
+    }, [])
 
     return (
         <>
@@ -14,7 +18,10 @@ function Home() {
 
         <hr className='mt-4 mb-4'/>
 
-        <Notes notes = {notes}/>
+        {loading
+            ? <Loader/>
+            :<Notes notes = {notes} onRemove={removeNote}/>
+        }
         </>
     );
 }
