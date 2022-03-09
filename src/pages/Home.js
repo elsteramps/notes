@@ -3,10 +3,18 @@ import Form from '../components/Form';
 import Loader from '../components/loader';
 import Notes from '../components/Notes';
 import { FireBaseContext } from '../context/firebase/fireBaseContext';
+import { alertContext } from '../context/alert/alertContext';
 
 function Home() {
 
     const {loading, notes, fetchNotes, removeNote} = useContext(FireBaseContext)
+    const alert = useContext(alertContext)
+
+    const deleteFunc = (id) =>{
+        removeNote(id);
+        alert.show('Note was deleted', 'warning')
+        setTimeout(() => alert.hide(), 3000)
+    }
 
     useEffect(() => {
         fetchNotes()
@@ -20,7 +28,7 @@ function Home() {
 
         {loading
             ? <Loader/>
-            :<Notes notes = {notes} onRemove={removeNote}/>
+            :<Notes notes = {notes} onRemove={deleteFunc}/>
         }
         </>
     );

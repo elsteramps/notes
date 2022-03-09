@@ -2,7 +2,7 @@ import React, {useReducer, useContext} from "react";
 import axios from "axios";
 import {FireBaseContext} from "./fireBaseContext";
 import { firebaseReducer } from "./firebaseReducer";
-import {alertContext}  from "../alert/alertContext";
+// import {alertContext}  from "../alert/alertContext";
 import { ADD_NOTE, FETCH_NOTES, REMOVE_NOTE, SHOW_LOADER } from "../types";
 
 const url = process.env.REACT_APP_DB_URL
@@ -62,8 +62,6 @@ export const FirebaseState = ({children}) => {
             type: REMOVE_NOTE,
             payload: id
         })
-
-        //  await alert.show('a;sfsa;f', 'success')
     }
 
     return (
