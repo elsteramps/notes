@@ -1,12 +1,15 @@
-import React, {useReducer} from "react";
+import React, {useReducer, useContext} from "react";
 import axios from "axios";
 import {FireBaseContext} from "./fireBaseContext";
 import { firebaseReducer } from "./firebaseReducer";
+import {alertContext}  from "../alert/alertContext";
 import { ADD_NOTE, FETCH_NOTES, REMOVE_NOTE, SHOW_LOADER } from "../types";
 
 const url = process.env.REACT_APP_DB_URL
 
 export const FirebaseState = ({children}) => {
+
+    // const alert = useContext(alertContext)
     const initialState = {
         notes: [],
         loading: false
@@ -14,20 +17,21 @@ export const FirebaseState = ({children}) => {
     const [state, dispatch] = useReducer(firebaseReducer, initialState)
 
     const showLoader = () => dispatch({type: SHOW_LOADER})
-
     const fetchNotes = async () => {
+
         const res = await axios.get(`${url}/notes.json`)
-        console.log(res)
+        // console.log(res)
 
-
-
-        const payload = Object.keys(res.data).map(key => {
+        if(res.data){
+         const payload = Object.keys(res.data).map(key => {
            return {
                ...res.data[key],
                id: key
            }}
        )
        dispatch ({type: FETCH_NOTES, payload})
+    }
+    else{state.loading = false}
     }
 
     const addNote = async title => {
@@ -58,6 +62,8 @@ export const FirebaseState = ({children}) => {
             type: REMOVE_NOTE,
             payload: id
         })
+
+        //  await alert.show('a;sfsa;f', 'success')
     }
 
     return (

@@ -12,8 +12,7 @@ function Alert() {
     return (
         <div className={`alert alert-${alert.type || 'warning'} alert-dismissible fade show`}>
             {alert.text}
-            <button onClick={hide} type="button" className="btn btn-close" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
+            <button onClick={hide} type="button" className="btn btn-close">
             </button>
       </div>
     );

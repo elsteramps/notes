@@ -11,6 +11,7 @@ function Form() {
         e.preventDefault();
         if(value.trim()){
             firebase.addNote(value.trim()).then(() => {
+                console.log(alert)
                 alert.show("Note was created", 'success')
             }).catch(() => {
                 alert.show('Oops... Smth went wroOong', 'danger')
@@ -28,7 +29,7 @@ function Form() {
                 <input 
                 type="text" 
                 className='form-control'
-                placeholder='Введите название заметки'
+                placeholder='Enter your note here'
                 value={value}
                 onChange = {e => setValue(e.target.value)}>
                 </input>
