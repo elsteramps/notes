@@ -2,6 +2,7 @@ import React from 'react';
 import {NavLink} from 'react-router-dom';
 
 function NavBar() {
+
     return (
         <nav className='navbar p-3 navbar-dark navbar-expand-lg bg-info'>
             <div className='navbar-brand'>

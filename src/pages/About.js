@@ -1,7 +1,15 @@
 import React from "react";
+import {CSSTransition} from 'react-transition-group'
 
 export const About = () => {
     return ( 
+        <CSSTransition
+        timeout={{
+            enter: 500,
+            exit: 200 
+        }}
+        classNames={'about'}
+        >
         <>
         <div className="jumbotron bg-light">
             <div className="container">
@@ -11,5 +19,6 @@ export const About = () => {
             </div>
         </div>
         </>
+        </CSSTransition>
     )
 }
