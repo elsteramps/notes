@@ -13,10 +13,8 @@ function Form() {
             firebase.addNote(value.trim()).then(() => {
                 console.log(alert)
                 alert.show("Note was created", 'success')
-                setTimeout(() => alert.hide(), 3000)
             }).catch(() => {
                 alert.show('Oops... Smth went wroOong', 'danger')
-                setTimeout(() => alert.hide(), 3000)
             })
             setValue("");
         }

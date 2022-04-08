@@ -1,5 +1,6 @@
 import React from "react";
 import {CSSTransition} from 'react-transition-group'
+import Navbar from '../components/NavBar'
 
 export const About = () => {
     return ( 
@@ -11,6 +12,8 @@ export const About = () => {
         classNames={'about'}
         >
         <>
+        <Navbar/>
+
         <div className="jumbotron bg-light">
             <div className="container">
                 <h1 className="display-4 pt-4">Hey everyone!</h1>

@@ -14,10 +14,32 @@ code {
     monospace;
 }
 
+h6{
+  margin-top: 2px
+}
+
+.navbarFlex{
+  margin-top: 10px;
+}
+
+.links{
+  margin-top: 0px;
+}
+
 .note{
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.done{
+  text-decoration: line-through;
+}
+
+.navbarFlex{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
 
 .date{

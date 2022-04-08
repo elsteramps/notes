@@ -1,7 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {TransitionGroup, CSSTransition} from 'react-transition-group'
 
 function Notes({notes, onRemove}) {
+
+    // const [style, setStyle] = useState({})
+
+    const notesCpy = [...notes]
+
+    const [notesArr, setNotes] = useState(notesCpy)
+
+    const done = 'Done'
+    const undone = 'Undone'
+
+    const handleComplete =id => {
+        const updateNotes = [...notesCpy].map(note => {
+            if (note.id === id){
+                note.done = !note.done
+            }
+            return note
+        })
+
+        notes = updateNotes
+        setNotes(updateNotes)
+    }
+
+
+
 
     return (
         <TransitionGroup component='ul' className='list-group'>
@@ -15,10 +39,25 @@ function Notes({notes, onRemove}) {
                 >
                 <li className='list-group-item note p-3'>
 
-                        <div>
+                        <div className={`${note.done ? 'done' : ''} `}>
                             <strong>{note.title}</strong>
                             <small className='date'>{note.date}</small>
                         </div>
+
+                        <div
+                        style={{
+                            display: 'flex', 
+                            justifyContent: 'space-around', 
+                            width: '130px',
+                        }}
+                        >
+                        <button 
+                            type="button" 
+                            className={`btn note ${note.done ? 'btn-outline-warning' : 'btn-outline-success'}`}
+                            onClick={() => handleComplete(note.id)}
+                            >
+                            {`${note.done ? undone : done}`}
+                        </button>
                         
                         <button 
                             type="button" 
@@ -26,6 +65,7 @@ function Notes({notes, onRemove}) {
                             onClick={() => onRemove(note.id)}>
                             &times;
                         </button>
+                        </div>
                     </li>
                 </CSSTransition>
             )})}

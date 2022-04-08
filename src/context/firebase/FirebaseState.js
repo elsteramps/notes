@@ -1,45 +1,65 @@
-import React, {useReducer, useContext} from "react";
+import React, {useReducer} from "react";
 import axios from "axios";
 import {FireBaseContext} from "./fireBaseContext";
 import { firebaseReducer } from "./firebaseReducer";
-// import {alertContext}  from "../alert/alertContext";
-import { ADD_NOTE, FETCH_NOTES, REMOVE_NOTE, SHOW_LOADER } from "../types";
+import {useAuth} from './AuthContext'
+import { ADD_NOTE, FETCH_NOTES, REMOVE_NOTE, SHOW_LOADER, NOTE_DONE } from "../types";
 
 const url = process.env.REACT_APP_DB_URL
 
 export const FirebaseState = ({children}) => {
 
-    // const alert = useContext(alertContext)
     const initialState = {
         notes: [],
-        loading: false
+        loading: false,
+        done: false
     }
+
     const [state, dispatch] = useReducer(firebaseReducer, initialState)
 
     const showLoader = () => dispatch({type: SHOW_LOADER})
+
+    const options = { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'numeric', 
+        day: 'numeric', 
+        hour: 'numeric', 
+        minute: 'numeric', 
+        second: 'numeric' 
+    }
+
+    const today = new Date()
+
     const fetchNotes = async () => {
+
+        showLoader();
 
         const res = await axios.get(`${url}/notes.json`)
         // console.log(res)
 
         if(res.data){
-         const payload = Object.keys(res.data).map(key => {
+        const payload = Object.keys(res.data).map(key => {
            return {
                ...res.data[key],
                id: key
-           }}
+           }
+        }   
        )
        dispatch ({type: FETCH_NOTES, payload})
     }
-    else{state.loading = false}
     }
 
     const addNote = async title => {
         const note = {
-            title, date: new Date().toJSON()
+            title, 
+            date: today.toLocaleDateString("en-EU", options),
+            done: false
         }
+
         try{
             const res = await axios.post(`${url}/notes.json`, note)
+
             console.log('addNote', res.data)
             const payload = {
                 ...note,
@@ -50,7 +70,9 @@ export const FirebaseState = ({children}) => {
                 type: ADD_NOTE,
                 payload
             })
-        } catch (e) {
+        }
+        
+        catch (e) {
             throw new Error(e.message)
         }
     }
